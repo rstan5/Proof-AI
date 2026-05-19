@@ -1,0 +1,49 @@
+import Link from "next/link";
+import { LogoMark } from "@/components/branding/logo";
+
+const footer = [
+  { label: "Privacy", href: "#" },
+  { label: "Terms", href: "#" },
+  { label: "Contact", href: "#" },
+];
+
+export function Footer() {
+  return (
+    <footer className="border-t border-border-subtle bg-surface">
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-12 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 transition hover:opacity-90"
+        >
+          <LogoMark size={32} decorative />
+          <div>
+            <p className="font-serif text-sm font-semibold text-ink">Proof AI</p>
+            <p className="text-xs text-ink-muted">
+              Competency verification for hiring teams.
+            </p>
+          </div>
+        </Link>
+        <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-muted">
+          {footer.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className="transition hover:text-ink"
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+        <p className="text-xs text-ink-faint sm:text-right">
+          © {new Date().getFullYear()} Proof AI. All rights reserved.
+        </p>
+      </div>
+      <div className="mx-auto max-w-6xl border-t border-border-subtle px-4 py-4 sm:px-6">
+        <p className="text-center text-[11px] leading-relaxed text-ink-faint">
+          Built for pre-screening. Proof AI does not replace interviews or human
+          judgment — it helps you spend time on candidates who can do the work.
+        </p>
+      </div>
+    </footer>
+  );
+}
