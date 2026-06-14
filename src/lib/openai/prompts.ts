@@ -1,6 +1,5 @@
 import type { JobRole } from "@/types/roles";
 
-/** System prompt: generate a single realistic simulation brief for the role. */
 export function simulationSystemPrompt(): string {
   return [
     "You are an expert hiring assessor and instructional designer.",
@@ -25,6 +24,40 @@ export function simulationUserPrompt(role: JobRole): string {
   ].join("\n");
 }
 
+export interface CustomSimulationParams {
+  company_name: string;
+  role_title: string;
+  job_description: string;
+  looking_for: string;
+}
+
+export function customSimulationSystemPrompt(): string {
+  return [
+    "You are an expert hiring assessor and instructional designer.",
+    "Generate ONE realistic job simulation scenario that a recruiter will send to a candidate.",
+    "The scenario must read like a real work brief: company context, a stakeholder situation, a concrete task with time pressure, and clear success criteria.",
+    "Tailor everything specifically to the company, role, and competencies provided.",
+    "Do not mention AI, simulation, test, or assessment anywhere in the output.",
+    "Output plain text only — no headers, no bullet lists, no markdown.",
+    "Length: 200–350 words.",
+  ].join(" ");
+}
+
+export function customSimulationUserPrompt(p: CustomSimulationParams): string {
+  return [
+    `Company: ${p.company_name}`,
+    `Role: ${p.role_title}`,
+    "",
+    "Job description:",
+    p.job_description,
+    "",
+    "Key competencies to assess:",
+    p.looking_for,
+    "",
+    "Generate the simulation scenario now.",
+  ].join("\n");
+}
+
 const evaluationSchemaDescription = `{
   "overall_score": number (0-100),
   "communication": number (0-100),
@@ -35,7 +68,6 @@ const evaluationSchemaDescription = `{
   "recommendation": string (one of: "Strong Interview Candidate", "Interview with Reservations", "Not Recommended")
 }`;
 
-/** System prompt: return ONLY JSON matching the competency rubric. */
 export function evaluationSystemPrompt(): string {
   return [
     "You evaluate hiring simulation submissions using a consistent rubric.",
@@ -47,7 +79,7 @@ export function evaluationSystemPrompt(): string {
 }
 
 export function evaluationUserPrompt(params: {
-  role: JobRole;
+  role: string;
   simulationPrompt: string;
   candidateResponse: string;
 }): string {
