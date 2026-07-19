@@ -1,7 +1,7 @@
 "use client";
 
 import { FadeIn } from "@/components/ui/fade-in";
-import { ReportPreview } from "@/components/marketing/report-preview";
+import { HeroFlow } from "@/components/marketing/hero-flow";
 import { AnimatedButton } from "@/components/ui/animated-button";
 
 export function HeroSection() {
@@ -30,7 +30,7 @@ export function HeroSection() {
                 Generate a sample for your role
               </AnimatedButton>
               <AnimatedButton href="#simulation" variant="secondary">
-                See the simulation
+                See the report
               </AnimatedButton>
             </div>
             <p className="mt-5 text-xs leading-relaxed text-ink-faint">
@@ -40,7 +40,7 @@ export function HeroSection() {
             </p>
           </FadeIn>
           <FadeIn delay={140}>
-            <ReportPreview />
+            <HeroFlow />
           </FadeIn>
         </div>
       </div>

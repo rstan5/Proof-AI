@@ -10,7 +10,7 @@ const nav = [
   { label: "Benefits", href: "#benefits" },
   { label: "Process", href: "#how" },
   { label: "Product", href: "#product" },
-  { label: "Simulation", href: "#simulation" },
+  { label: "Report", href: "#simulation" },
 ];
 
 export function Navbar() {
