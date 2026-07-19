@@ -61,12 +61,17 @@ const config: Config = {
         shimmer: {
           "100%": { transform: "translateX(100%)" },
         },
+        fadeSlide: {
+          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.6s ease-out forwards",
         fadeUp: "fadeUp 0.65s ease-out both",
         marquee: "marquee 42s linear infinite",
         shimmer: "shimmer 2s infinite",
+        fadeSlide: "fadeSlide 0.42s ease-out both",
       },
     },
   },

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { SimulationClient } from "./SimulationClient";
 import type { SimulationRecord } from "@/types/database";
 
@@ -7,23 +7,32 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
+/**
+ * Load by UUID with service role so candidates (anon) and logged-in
+ * recruiters previewing a link always get the same page. The UUID is
+ * the invite secret.
+ */
 export default async function SimulationPage({ params }: Props) {
   const { id } = await params;
-  const supabase = await createClient();
 
-  const { data, error } = await supabase
-    .from("simulations")
-    .select("id, company_name, role_title, generated_prompt")
-    .eq("id", id)
-    .single();
+  let data: Pick<
+    SimulationRecord,
+    "id" | "company_name" | "role_title" | "generated_prompt"
+  > | null = null;
 
-  if (error || !data) {
-    notFound();
+  try {
+    const admin = createAdminClient();
+    const { data: row, error } = await admin
+      .from("simulations")
+      .select("id, company_name, role_title, generated_prompt")
+      .eq("id", id)
+      .single();
+    if (!error && row) data = row;
+  } catch (err) {
+    console.error("Simulation page admin load failed:", err);
   }
 
-  return (
-    <SimulationClient
-      simulation={data as Pick<SimulationRecord, "id" | "company_name" | "role_title" | "generated_prompt">}
-    />
-  );
+  if (!data) notFound();
+
+  return <SimulationClient simulation={data} />;
 }

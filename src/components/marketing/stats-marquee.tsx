@@ -1,9 +1,9 @@
 const STATS = [
-  "$100k+ often spent on a single faulty hire (recruiting + ramp + replacement)",
-  "10+ hours spent on each candidate before you know if they can do the job",
-  "A large % of hires miss performance or competency expectations within 18 months",
-  "Most teams underestimate the full cost of a mis-hire",
-  "Proof AI surfaces weak fits before expensive interview loops",
+  "Role-native simulations for any industry",
+  "On-screen materials: emails, reports, tables, chats",
+  "Competency verified before the interview loop",
+  "Slots into the ATS you already use",
+  "Structured reports for recruiters and hiring managers",
 ];
 
 /**
@@ -15,10 +15,9 @@ export function StatsMarquee() {
 
   return (
     <section
-      aria-label="Hiring cost and risk statistics"
+      aria-label="Product highlights"
       className="border-b border-border-subtle bg-accent/[0.08]"
     >
-      {/* Reduced motion: static row */}
       <div className="hidden flex-wrap items-center justify-center gap-x-5 gap-y-2 px-4 py-4 text-center motion-reduce:flex">
         {STATS.map((text) => (
           <span

@@ -1,3 +1,11 @@
+export interface CompanyProfile {
+  id: string;
+  company_name: string;
+  role_at_company: string;
+  contact_phone: string | null;
+  created_at: string;
+}
+
 export interface CompetencyEvaluation {
   overall_score: number;
   communication: number;
@@ -27,4 +35,25 @@ export interface SubmissionRecord {
   violation_count: number;
   evaluation_json: CompetencyEvaluation | null;
   created_at: string;
+}
+
+export type CandidateRow = SubmissionRecord & {
+  simulation: Pick<
+    SimulationRecord,
+    "id" | "role_title" | "company_name" | "generated_prompt"
+  > | null;
+};
+
+export interface DashboardAnalytics {
+  totalCandidates: number;
+  evaluatedCandidates: number;
+  hireSuggestionRate: number;
+  reservationRate: number;
+  notRecommendedRate: number;
+  avgOverallScore: number;
+  avgCommunication: number;
+  avgProblemSolving: number;
+  avgDomainKnowledge: number;
+  archetypes: { label: string; count: number }[];
+  roleBreakdown: { role: string; count: number }[];
 }

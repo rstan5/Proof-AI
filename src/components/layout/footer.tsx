@@ -4,7 +4,10 @@ import { LogoMark } from "@/components/branding/logo";
 const footer = [
   { label: "Privacy", href: "#" },
   { label: "Terms", href: "#" },
-  { label: "Contact", href: "#" },
+  {
+    label: "Contact",
+    href: "mailto:contact.proof.ai@gmail.com?subject=Proof%20AI%20inquiry",
+  },
 ];
 
 export function Footer() {
@@ -19,7 +22,7 @@ export function Footer() {
           <div>
             <p className="font-serif text-sm font-semibold text-ink">Proof AI</p>
             <p className="text-xs text-ink-muted">
-              Competency verification for hiring teams.
+              Competency simulations for any industry.
             </p>
           </div>
         </Link>
@@ -42,6 +45,13 @@ export function Footer() {
         <p className="text-center text-[11px] leading-relaxed text-ink-faint">
           Built for pre-screening. Proof AI does not replace interviews or human
           judgment — it helps you spend time on candidates who can do the work.
+          Pricing:{" "}
+          <a
+            href="mailto:contact.proof.ai@gmail.com?subject=Proof%20AI%20pricing"
+            className="underline decoration-border-subtle underline-offset-2 hover:text-ink-muted"
+          >
+            contact.proof.ai@gmail.com
+          </a>
         </p>
       </div>
     </footer>

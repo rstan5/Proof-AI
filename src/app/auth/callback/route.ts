@@ -31,6 +31,28 @@ export async function GET(request: NextRequest) {
 
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
+      // Backfill company profile if signup created the user before the insert ran
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        const meta = user.user_metadata ?? {};
+        await supabase.from("company_profiles").upsert({
+          id: user.id,
+          company_name:
+            typeof meta.company_name === "string"
+              ? meta.company_name
+              : "Company",
+          role_at_company:
+            typeof meta.role_at_company === "string"
+              ? meta.role_at_company
+              : "Recruiter",
+          contact_phone:
+            typeof meta.contact_phone === "string"
+              ? meta.contact_phone || null
+              : null,
+        });
+      }
       return NextResponse.redirect(`${origin}${next}`);
     }
   }

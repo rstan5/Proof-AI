@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem \"C:\\\\Users\\\\ryanj\\\\OneDrive\\\\Desktop\\\\New folder\" -Exclude \"node_modules\" -Recurse)",
+      "Bash(Select-Object FullName)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\ryanj\\\\OneDrive\\\\Desktop\\\\New folder\" -Exclude \"node_modules\",\".next\" -Recurse | Where-Object { !$_.PSIsContainer } | Select-Object -ExpandProperty FullName)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\ryanj\\\\OneDrive\\\\Desktop\\\\New folder\" -Recurse | Where-Object { !$_.PSIsContainer -and $_.FullName -notmatch \"node_modules|\\\\.next|\\\\.claude\" } | Select-Object -ExpandProperty FullName)",
+      "PowerShell(supabase *)"
+    ]
+  }
+}
