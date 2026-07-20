@@ -12,9 +12,9 @@ const PROFILES = [
   [94, 86, 68, 80],
 ] as const;
 
-/** Label sets that rotate onto the axes over time. */
+/** Compact labels so side axes never clip. Order: top, right, bottom, left. */
 const LABEL_SETS = [
-  ["Communication", "Problem solving", "Domain", "Overall"],
+  ["Communication", "Problem", "Domain", "Overall"],
   ["Clarity", "Judgment", "Craft", "Fit"],
   ["Writing", "Analysis", "Expertise", "Impact"],
   ["Tone", "Priorities", "Knowledge", "Signal"],
@@ -26,9 +26,8 @@ function polar(
   radius: number,
   index: number,
   total: number,
-  rotation = 0,
 ) {
-  const angle = (Math.PI * 2 * index) / total - Math.PI / 2 + rotation;
+  const angle = (Math.PI * 2 * index) / total - Math.PI / 2;
   return {
     x: cx + radius * Math.cos(angle),
     y: cy + radius * Math.sin(angle),
@@ -41,10 +40,9 @@ function ringPoints(
   cy: number,
   radius: number,
   count: number,
-  rotation = 0,
 ) {
   return Array.from({ length: count }, (_, i) => {
-    const { x, y } = polar(cx, cy, radius, i, count, rotation);
+    const { x, y } = polar(cx, cy, radius, i, count);
     return `${x},${y}`;
   }).join(" ");
 }
@@ -59,8 +57,7 @@ function smoothstep(t: number) {
 }
 
 /**
- * Slightly smaller translucent hero radar —
- * polygon keeps morphing; labels cycle (no spin).
+ * Hero radar — morphing scores, cycling labels, padded so text never clips.
  */
 export function HeroRadar({ className }: { className?: string }) {
   const uid = useId().replace(/:/g, "");
@@ -70,11 +67,13 @@ export function HeroRadar({ className }: { className?: string }) {
   const [labelOpacity, setLabelOpacity] = useState(1);
   const [intro, setIntro] = useState(0);
 
-  const size = 460;
-  const cx = size / 2;
-  const cy = size / 2;
-  const maxR = size * 0.3;
-  const labelR = size * 0.39;
+  // Wide canvas gives left/right labels room; diamond is a bit larger.
+  const width = 580;
+  const height = 500;
+  const cx = width / 2;
+  const cy = height / 2;
+  const maxR = 168;
+  const labelR = 198;
   const axisCount = 4;
 
   useEffect(() => {
@@ -96,13 +95,13 @@ export function HeroRadar({ className }: { className?: string }) {
 
     let frame: number;
     const start = performance.now();
-    const MORPH_MS = 5500;
-    const LABEL_MS = 4000;
+    const MORPH_MS = 2600;
+    const LABEL_MS = 1700;
 
     const tick = (now: number) => {
       const elapsed = now - start;
 
-      const introT = smoothstep(Math.min(1, elapsed / 1200));
+      const introT = smoothstep(Math.min(1, elapsed / 900));
       setIntro(introT);
 
       const morphPos = (elapsed / MORPH_MS) % PROFILES.length;
@@ -115,8 +114,8 @@ export function HeroRadar({ className }: { className?: string }) {
       const nextScores = from.map((v, i) => {
         const base = lerp(v, to[i], localT);
         const pulse =
-          Math.sin(elapsed / 900 + i * 1.7) * 4 +
-          Math.sin(elapsed / 1400 + i * 0.9) * 3;
+          Math.sin(elapsed / 520 + i * 1.7) * 5 +
+          Math.sin(elapsed / 780 + i * 0.9) * 4;
         return Math.min(98, Math.max(55, base + pulse));
       });
       setScores(nextScores);
@@ -125,8 +124,8 @@ export function HeroRadar({ className }: { className?: string }) {
       const labelIdx = Math.floor(labelCycle) % LABEL_SETS.length;
       const labelFrac = labelCycle - Math.floor(labelCycle);
       let opacity = 1;
-      if (labelFrac > 0.82) opacity = 1 - (labelFrac - 0.82) / 0.18;
-      else if (labelFrac < 0.12) opacity = labelFrac / 0.12;
+      if (labelFrac > 0.78) opacity = 1 - (labelFrac - 0.78) / 0.22;
+      else if (labelFrac < 0.14) opacity = labelFrac / 0.14;
       setLabelOpacity(Math.max(0, Math.min(1, opacity)));
       setLabels([...LABEL_SETS[labelIdx]]);
 
@@ -148,18 +147,18 @@ export function HeroRadar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "relative mx-auto flex w-full max-w-[28rem] items-center justify-center",
+        "relative mx-auto flex w-full max-w-[34rem] items-center justify-center overflow-visible",
         className,
       )}
     >
       <div
-        className="pointer-events-none absolute inset-[14%] rounded-full bg-accent/10 blur-3xl"
+        className="pointer-events-none absolute inset-[10%] rounded-full bg-accent/10 blur-3xl"
         aria-hidden
       />
 
       <svg
-        viewBox={`0 0 ${size} ${size}`}
-        className="relative h-auto w-full"
+        viewBox={`0 0 ${width} ${height}`}
+        className="relative h-auto w-full overflow-visible"
         role="img"
         aria-label="Animated competency radar showing shifting scores and labels"
       >
@@ -236,7 +235,7 @@ export function HeroRadar({ className }: { className?: string }) {
               key={i}
               cx={x}
               cy={y}
-              r="4.5"
+              r="5"
               fill="#3d4f5c"
               fillOpacity="0.75"
               style={{ opacity: intro > 0.05 ? 1 : 0 }}
@@ -248,17 +247,19 @@ export function HeroRadar({ className }: { className?: string }) {
           const { x, y, angle } = polar(cx, cy, labelR, i, axisCount);
           const cos = Math.cos(angle);
           const sin = Math.sin(angle);
-          const anchor =
-            Math.abs(cos) < 0.25 ? "middle" : cos > 0 ? "start" : "end";
-          const dy = Math.abs(cos) < 0.25 ? (sin > 0 ? 14 : -6) : 5;
+          const isSide = Math.abs(cos) >= 0.25;
+          const anchor = !isSide ? "middle" : cos > 0 ? "start" : "end";
+          const dy = !isSide ? (sin > 0 ? 16 : -8) : 5;
+          // Nudge side labels inward a touch so they stay inside the viewBox
+          const nx = isSide ? x - Math.sign(cos) * 4 : x;
           return (
             <text
               key={`${i}-${label}`}
-              x={x}
+              x={nx}
               y={y}
               dy={dy}
               textAnchor={anchor}
-              className="fill-ink-muted text-[12px] font-semibold uppercase tracking-[0.12em]"
+              className="fill-ink-muted text-[13px] font-semibold uppercase tracking-[0.1em]"
               style={{
                 fontFamily: "var(--font-sans), Nunito, sans-serif",
                 opacity: labelOpacity,
@@ -270,7 +271,7 @@ export function HeroRadar({ className }: { className?: string }) {
         })}
       </svg>
 
-      <div className="pointer-events-none absolute bottom-1 left-1/2 flex -translate-x-1/2 items-center gap-2 text-[11px] text-ink-faint sm:bottom-2">
+      <div className="pointer-events-none absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-2 text-[11px] text-ink-faint">
         <span
           className="inline-block h-2.5 w-2.5 rounded-sm bg-accent/25 ring-1 ring-accent/35"
           aria-hidden
