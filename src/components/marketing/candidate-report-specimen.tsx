@@ -28,7 +28,7 @@ export function CandidateReportSpecimen() {
         </FadeIn>
 
         <FadeIn delay={120}>
-          <div className="mx-auto mt-10 flex max-w-2xl justify-center sm:mt-12">
+          <div className="mx-auto mt-10 flex justify-center sm:mt-12">
             <ReportPreview />
           </div>
         </FadeIn>

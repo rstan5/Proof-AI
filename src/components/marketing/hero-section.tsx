@@ -1,7 +1,7 @@
 "use client";
 
 import { FadeIn } from "@/components/ui/fade-in";
-import { HeroFlow } from "@/components/marketing/hero-flow";
+import { HeroRadar } from "@/components/marketing/hero-radar";
 import { AnimatedButton } from "@/components/ui/animated-button";
 
 export function HeroSection() {
@@ -40,7 +40,7 @@ export function HeroSection() {
             </p>
           </FadeIn>
           <FadeIn delay={140}>
-            <HeroFlow />
+            <HeroRadar />
           </FadeIn>
         </div>
       </div>

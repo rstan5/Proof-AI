@@ -65,6 +65,10 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(8px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        "radar-breathe": {
+          "0%, 100%": { transform: "scale(1)", opacity: "0.92" },
+          "50%": { transform: "scale(1.03)", opacity: "1" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.6s ease-out forwards",
@@ -72,6 +76,7 @@ const config: Config = {
         marquee: "marquee 42s linear infinite",
         shimmer: "shimmer 2s infinite",
         fadeSlide: "fadeSlide 0.42s ease-out both",
+        "radar-breathe": "radar-breathe 5.5s ease-in-out infinite",
       },
     },
   },
