@@ -19,7 +19,7 @@ const nunito = Nunito({
 export const metadata: Metadata = {
   title: "Proof AI — Verify competency before you hire",
   description:
-    "Stop spending interview hours on unproven candidates. Proof AI turns your job description into a work simulation and a rubric-scored competency report — before the interview loop.",
+    "See how candidates think through role-like work before interviews. Proof AI is a competency work sample — rubric-scored, not a replacement for your hiring loop.",
 };
 
 export default function RootLayout({

@@ -33,27 +33,27 @@ function artifactBodyLength(a: WorkArtifact): number {
 
 function isSubstantive(a: WorkArtifact): boolean {
   if (a.type === "data_table") {
-    return (a.rows?.length ?? 0) >= 3 && (a.columns?.length ?? 0) >= 2;
+    return (a.rows?.length ?? 0) >= 4 && (a.columns?.length ?? 0) >= 2;
   }
   if (a.type === "memo" || a.type === "doc" || a.type === "crm_record") {
-    return a.body.trim().length >= 350;
+    return a.body.trim().length >= 600;
   }
   if (a.type === "email" || a.type === "slack" || a.type === "call_notes") {
-    return a.body.trim().length >= 180;
+    return a.body.trim().length >= 220;
   }
-  return a.body.trim().length >= 200;
+  return a.body.trim().length >= 300;
 }
 
 function hasEmbeddedSource(artifacts: WorkArtifact[]): boolean {
   const longDoc = artifacts.some(
     (a) =>
       (a.type === "memo" || a.type === "doc" || a.type === "crm_record") &&
-      a.body.trim().length >= 450,
+      a.body.trim().length >= 600,
   );
   const table = artifacts.some(
     (a) =>
       a.type === "data_table" &&
-      (a.rows?.length ?? 0) >= 3 &&
+      (a.rows?.length ?? 0) >= 4 &&
       (a.columns?.length ?? 0) >= 2,
   );
   const longEmail = artifacts.some(
@@ -104,9 +104,9 @@ export function validateSimulationMaterials(
       0,
     );
 
-    if (totalChars < 400) {
+    if (totalChars < 800) {
       reasons.push(
-        `Phase ${phase.number}: artifacts are too thin (${totalChars} chars).`,
+        `Phase ${phase.number}: artifacts are too thin (${totalChars} chars; need ≥800 of readable source content).`,
       );
     }
 
@@ -116,9 +116,15 @@ export function validateSimulationMaterials(
       );
     }
 
+    if (!hasEmbeddedSource(phase.artifacts)) {
+      reasons.push(
+        `Phase ${phase.number}: needs a rich on-screen source (memo/doc ≥600 chars, data_table with ≥4 rows, or a long email/slack with the content pasted in). Thin emails alone are not enough — especially Phase 1.`,
+      );
+    }
+
     if (NEEDS_EMBEDDED_SOURCE.test(instructionBlob) && !hasEmbeddedSource(phase.artifacts)) {
       reasons.push(
-        `Phase ${phase.number}: references a report/brief to analyze, but no full source body is in artifacts (need a memo/doc ≥450 chars, a data table, or a long email with the content pasted in).`,
+        `Phase ${phase.number}: references a report/brief to analyze, but no full source body is in artifacts.`,
       );
     }
   }
@@ -154,7 +160,7 @@ function hydratePhase(phase: SimulationPhase): SimulationPhase {
   const needsSource =
     NEEDS_EMBEDDED_SOURCE.test(instructionBlob) && !hasEmbeddedSource(artifacts);
 
-  if (!artifacts.length || totalChars < 400 || needsSource) {
+  if (!artifacts.length || totalChars < 800 || needsSource || !hasEmbeddedSource(artifacts)) {
     const seedParts = [
       phase.materials.trim(),
       phase.situation.trim(),
@@ -174,7 +180,7 @@ function hydratePhase(phase: SimulationPhase): SimulationPhase {
       const alreadyHasSimilar = artifacts.some(
         (a) =>
           (a.type === "memo" || a.type === "doc") &&
-          a.body.trim().length >= 350,
+          a.body.trim().length >= 600,
       );
       if (!alreadyHasSimilar) {
         artifacts.push({
@@ -270,12 +276,14 @@ export function materialsRepairUserPrompt(args: {
     "FIX REQUIREMENTS (do these concretely):",
     "- Keep the same company/role and phase structure.",
     "- For EVERY phase, artifacts[] must include FULL readable content (not pointers).",
-    "- Preferred fix when a report is mentioned: ADD a memo/doc artifact with 500+ characters of real report text (headings, bullets, numbers).",
+    "- Preferred fix when a report is mentioned: ADD a memo/doc artifact with 800+ characters of real report text (headings, bullets, numbers).",
     "- Keep any short assignment email, but add the report as a SEPARATE memo.",
+    "- EVERY phase (including Phase 1) must have a memo/doc ≥600 chars OR a data_table with ≥4 rows.",
     "- Add a data_table with real rows when the phase involves numbers — include every figure the deliverable needs.",
     "- Rewrite task/deliverable so the candidate only TYPES a response (email reply, short memo, pitch text, slide outline as bullets, case note). Never ask for PowerPoint, Excel, dashboards, calls, or files.",
     "- Do NOT mention PDFs, Drive links, or attachments.",
     "- Aim for 2–4 artifacts per phase.",
+    "- total_minutes is a session CAP (max 120), not a promise that every run takes two hours.",
     "",
     `COMPANY: ${args.company_name}`,
     `ROLE: ${args.role_title}`,

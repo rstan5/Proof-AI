@@ -340,10 +340,10 @@ export function SimulationClient({ simulation }: { simulation: SimProps }) {
           <div className="mt-5 grid grid-cols-2 gap-3">
             <div className="rounded-xl border border-border-subtle bg-surface/60 px-3 py-3">
               <p className="text-[10px] font-semibold uppercase tracking-wide text-ink-faint">
-                Duration
+                Session limit
               </p>
               <p className="mt-1 font-serif text-lg font-semibold text-ink">
-                ~{structured.total_minutes} min
+                Up to {structured.total_minutes} min
               </p>
             </div>
             <div className="rounded-xl border border-border-subtle bg-surface/60 px-3 py-3">
@@ -365,7 +365,7 @@ export function SimulationClient({ simulation }: { simulation: SimProps }) {
                 <span className="font-medium text-ink">
                   {p.number}. {p.title}
                 </span>
-                <span className="text-xs text-ink-faint">{p.minutes} min</span>
+                <span className="text-xs text-ink-faint">~{p.minutes} min</span>
               </li>
             ))}
           </ol>
@@ -374,6 +374,10 @@ export function SimulationClient({ simulation }: { simulation: SimProps }) {
             <p className="text-xs font-semibold text-amber-800">Before you begin</p>
             <ul className="mt-2 space-y-1 text-xs text-amber-700">
               <li>• Complete phases in order — one phase at a time</li>
+              <li>
+                • Suggested phase times are pacing guides — finish at your own
+                speed within the session limit
+              </li>
               <li>• Fullscreen is required for the entire assessment</li>
               <li>
                 • Exiting fullscreen voids your attempt immediately and notifies
@@ -476,7 +480,7 @@ export function SimulationClient({ simulation }: { simulation: SimProps }) {
           <div className="overflow-hidden rounded-2xl border border-border-subtle bg-white shadow-sm">
             <div className="border-b border-border-subtle bg-surface-overlay/50 px-5 py-4">
               <p className="font-mono text-[11px] font-medium uppercase tracking-wider text-ink-faint">
-                Phase {current.number} · {current.minutes} minutes
+                Phase {current.number} · ~{current.minutes} min suggested
               </p>
               <h2 className="mt-1 font-serif text-xl font-semibold text-ink">
                 {current.title}

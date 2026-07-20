@@ -20,9 +20,10 @@ export function CandidateReportSpecimen() {
               The competency report you get back
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-ink-muted sm:text-base">
-              Scores are tied to observed work — communication, problem solving,
-              domain knowledge — with strengths, gaps, and a clear recommendation.
-              Transparent enough to trust. Structured enough to act on.
+              A competency readout from observed work — how they think,
+              communicate, and prioritize — with strengths, gaps, and a
+              recommendation. Use it to inform interviews; it does not replace
+              them.
             </p>
           </div>
         </FadeIn>

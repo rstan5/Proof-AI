@@ -1,9 +1,9 @@
 const STATS = [
-  "Fewer interviews spent on weak fits",
-  "Hiring-manager time reserved for finalists",
-  "Evidence before opinion",
+  "See how candidates think through the work",
+  "Competency signal — not an interview replacement",
+  "Fewer weak fits reaching the loop",
   "Works beside the ATS you already use",
-  "Competency scored against a structured rubric",
+  "Rubric scores tied to observed output",
 ];
 
 /**

@@ -4,17 +4,17 @@ const capabilities = [
   {
     title: "Materials that look like the job",
     body: "Emails, reports, threads, and tables appear inside the assessment. Candidates work from what they see — not a vague prompt.",
-    benefit: "The output is comparable to real day-one work.",
+    benefit: "You watch how they use real artifacts under pressure.",
   },
   {
-    title: "Pressure without theater",
-    body: "Sequential phases force research, judgment, and written deliverables under time — typically about two hours.",
-    benefit: "Deep enough for hiring managers. Fast enough for recruiters.",
+    title: "Competency, not credentials",
+    body: "Phases ask for written work that reveals judgment, communication, and prioritization. Pace is individual — strong candidates finish sooner; a session time limit still applies.",
+    benefit: "Insight into how they work — not a substitute for interviews.",
   },
   {
     title: "Scores you can defend",
     body: "Each submission is evaluated against a structured rubric. Every competency score maps back to work the candidate produced.",
-    benefit: "Recommendations rest on evidence — not gut feel.",
+    benefit: "Evidence to inform interviews — not replace them.",
   },
 ];
 
@@ -25,12 +25,13 @@ export function FeatureSection() {
         <FadeIn>
           <div className="max-w-2xl">
             <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-              Built to sit in front of interviews
+              Built to inform interviews — not replace them
             </h2>
             <p className="mt-3 leading-relaxed text-ink-muted">
-              Proof AI does not replace your ATS or your interview loop. It
-              reduces false positives before either one spends time on a
-              candidate.
+              Proof AI is a competency signal before the loop. It does not
+              certify expertise, replace your ATS, or take the place of human
+              judgment. It shows how a candidate thinks through work that looks
+              like the role.
             </p>
           </div>
         </FadeIn>

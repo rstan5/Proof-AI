@@ -18,11 +18,12 @@ export function HeroSection() {
               Resumes are guesses. Proof is certainty.
             </h1>
             <p className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-ink-muted sm:text-lg">
-              Most interview hours go to candidates who have never shown they can
-              do the job. Proof AI verifies competency earlier — from your job
-              description it builds a realistic work simulation, embeds the
-              materials the role actually uses, and returns a rubric-scored
-              report before you spend calendar on interviews.
+              Most interview hours go to candidates who have never shown how they
+              think through the work. Proof AI is a competency work sample — not
+              a replacement for interviews. From your job description it builds a
+              realistic simulation with on-screen materials, then returns a
+              rubric-scored report so you see how someone works before you spend
+              calendar on them.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
               <AnimatedButton

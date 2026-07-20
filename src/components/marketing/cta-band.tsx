@@ -14,8 +14,8 @@ export function CtaBand() {
               </h2>
               <p className="mt-3 leading-relaxed text-ink-muted">
                 Sign in, paste a job description, and generate one free sample.
-                Complete the simulation and read the report — then decide whether
-                to bring Proof into your hiring process.
+                See how a candidate would think through the work — then decide
+                whether to use Proof alongside your interviews.
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <AnimatedButton

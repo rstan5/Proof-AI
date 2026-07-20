@@ -23,7 +23,7 @@ const steps = [
     step: "04",
     title: "You review evidence",
     body: "Output is scored against a structured competency rubric. Strengths, gaps, and a recommendation land in your dashboard.",
-    outcome: "Interview people who already cleared the bar.",
+    outcome: "You see how they think and work — signal for interviews, not a replacement.",
   },
 ];
 
@@ -38,7 +38,8 @@ export function HowItWorksSection() {
             </h2>
             <p className="mt-3 leading-relaxed text-ink-muted">
               No black box. Each step is grounded in the role you defined — so
-              the result is explainable to a hiring manager.
+              hiring managers see competency in how the candidate works, not a
+              claim of expertise.
             </p>
           </div>
         </FadeIn>

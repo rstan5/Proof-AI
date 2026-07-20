@@ -97,7 +97,7 @@ export function ReportPreview({ className }: { className?: string }) {
             </p>
             <div className="mt-2.5 flex flex-wrap gap-2 text-[11px] text-ink-faint">
               <span className="rounded-md border border-border-subtle bg-white px-2 py-0.5">
-                4 phases · ~115 min
+                4 phases · self-paced (time limit)
               </span>
               <span className="rounded-md border border-border-subtle bg-white px-2 py-0.5">
                 Submitted Mar 12

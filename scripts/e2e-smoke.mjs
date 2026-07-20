@@ -198,17 +198,17 @@ const artifactCount = structured.phases.reduce(
   (n, p) => n + (p.artifacts?.length ?? 0),
   0,
 );
-const memoOrDoc = structured.phases.some((p) =>
+const memoOrDoc = structured.phases.every((p) =>
   (p.artifacts ?? []).some(
     (a) =>
-      (a.type === "memo" || a.type === "doc" || a.type === "email") &&
-      (a.body?.length ?? 0) >= 200,
+      ((a.type === "memo" || a.type === "doc") && (a.body?.length ?? 0) >= 500) ||
+      (a.type === "data_table" && (a.rows?.length ?? 0) >= 3),
   ),
 );
 log(
   "phases include substantive on-screen artifacts",
   artifactCount >= 4 && memoOrDoc,
-  `artifacts=${artifactCount}, longSource=${memoOrDoc}`,
+  `artifacts=${artifactCount}, everyPhaseRich=${memoOrDoc}`,
 );
 
 const UNDOABLE =

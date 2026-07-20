@@ -22,7 +22,7 @@ export function Footer() {
           <div>
             <p className="font-serif text-sm font-semibold text-ink">Proof AI</p>
             <p className="text-xs text-ink-muted">
-              Competency verified before interviews.
+              Competency work samples — not interview replacements.
             </p>
           </div>
         </Link>
@@ -43,9 +43,9 @@ export function Footer() {
       </div>
       <div className="mx-auto max-w-6xl border-t border-border-subtle px-4 py-4 sm:px-6">
         <p className="text-center text-[11px] leading-relaxed text-ink-faint">
-          Built for pre-screening. Proof AI does not replace interviews or human
-          judgment — it helps you spend that time on candidates who have already
-          shown they can do the work. Pricing:{" "}
+          Proof AI shows how candidates think through role-like work. It does
+          not replace interviews, licensing, or human judgment — and it measures
+          competency, not claimed expertise. Pricing:{" "}
           <a
             href="mailto:contact.proof.ai@gmail.com?subject=Proof%20AI%20pricing"
             className="underline decoration-border-subtle underline-offset-2 hover:text-ink-muted"

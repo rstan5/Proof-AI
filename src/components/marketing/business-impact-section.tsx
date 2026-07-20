@@ -8,10 +8,10 @@ const metrics = [
       "Capability gaps show up in work product — before they consume interview weeks.",
   },
   {
-    value: "~2 hours",
-    label: "Of candidate work, not talk",
+    value: "Work product",
+    label: "How they think — on the page",
     detail:
-      "Enough depth that the signal is useful. Short enough that recruiters can run it at volume.",
+      "You see judgment, writing, and prioritization in action. Pace varies by candidate; sessions have a time limit, not a fixed length.",
   },
   {
     value: "Minutes",
@@ -54,10 +54,10 @@ export function BusinessImpactSection() {
               The cost of guessing is interviews
             </h2>
             <p className="mt-3 leading-relaxed text-ink-muted">
-              Resumes describe a career. They do not prove someone can execute
-              your work. Every weak fit that reaches an interview burns recruiter
-              hours and hiring-manager calendar — the most expensive part of the
-              process.
+              Resumes describe a career. They do not show how someone thinks
+              through your work. Proof surfaces competency — working judgment,
+              not claimed expertise — so weak fits leave before they burn
+              recruiter hours and hiring-manager calendar.
             </p>
           </div>
         </FadeIn>
