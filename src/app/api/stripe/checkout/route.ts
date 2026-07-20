@@ -59,6 +59,7 @@ export async function POST(request: Request) {
       mode: "subscription",
       customer: customerId,
       client_reference_id: user.id,
+      payment_method_types: ["card"],
       metadata: {
         supabase_user_id: user.id,
         plan_id: plan.id,
