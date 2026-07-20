@@ -98,6 +98,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ url: session.url });
   } catch (err) {
     console.error("Stripe checkout error:", err);
-    return NextResponse.json({ error: "Checkout failed" }, { status: 500 });
+    const message =
+      err && typeof err === "object" && "message" in err
+        ? String((err as { message: unknown }).message)
+        : "Checkout failed";
+    return NextResponse.json(
+      {
+        error: "Checkout failed",
+        detail: message.slice(0, 240),
+      },
+      { status: 500 },
+    );
   }
 }
