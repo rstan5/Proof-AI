@@ -3,27 +3,27 @@ import { FadeIn } from "@/components/ui/fade-in";
 const steps = [
   {
     step: "01",
-    title: "Define the role",
-    body: "Enter your company context, role title, job description, and the competencies that matter for this hire — in any industry.",
-    outcome: "The simulation is built against your bar for “good,” not a generic quiz.",
+    title: "Start from the role",
+    body: "You provide the company context, job description, and the competencies that matter for this hire.",
+    outcome: "The bar is yours — not a generic quiz bank.",
   },
   {
     step: "02",
-    title: "Generate a multi-phase simulation",
-    body: "Proof AI creates a ~2-hour work session: sequential phases with emails, memos, tables, chats, and other role materials embedded on-screen — no fake downloads.",
-    outcome: "Candidates prove capability through realistic output.",
+    title: "Proof builds the simulation",
+    body: "It extracts required skills from the brief, designs multi-phase work that mirrors the job, and embeds authentic materials — emails, memos, tables, chats — on screen.",
+    outcome: "Candidates work from the same kind of artifacts they would see on day one.",
   },
   {
     step: "03",
-    title: "Candidate completes the work",
-    body: "Share a link. They stay in a focused fullscreen environment, read the source materials, and submit deliverables phase by phase.",
-    outcome: "You see how they think, write, and execute under real constraints.",
+    title: "The candidate does the work",
+    body: "You send a link. They complete written deliverables phase by phase in a focused assessment environment.",
+    outcome: "You see how they think and execute — not how they interview.",
   },
   {
     step: "04",
-    title: "Review the competency report",
-    body: "Scores, strengths, weaknesses, and a hiring recommendation land in your dashboard — ready before you burn calendar on interviews.",
-    outcome: "Advance people who cleared the competency bar.",
+    title: "You review evidence",
+    body: "Output is scored against a structured competency rubric. Strengths, gaps, and a recommendation land in your dashboard.",
+    outcome: "Interview people who already cleared the bar.",
   },
 ];
 
@@ -34,11 +34,11 @@ export function HowItWorksSection() {
         <FadeIn>
           <div className="max-w-2xl">
             <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-              From job description to hiring signal
+              How Proof builds a trustworthy signal
             </h2>
             <p className="mt-3 leading-relaxed text-ink-muted">
-              A competency-first loop for any firm and any role — filter weak fits
-              early, and protect recruiter and hiring-manager time downstream.
+              No black box. Each step is grounded in the role you defined — so
+              the result is explainable to a hiring manager.
             </p>
           </div>
         </FadeIn>

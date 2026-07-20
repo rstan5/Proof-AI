@@ -2,43 +2,43 @@ import { FadeIn } from "@/components/ui/fade-in";
 
 const metrics = [
   {
-    value: "Front of funnel",
-    label: "Competency before interviews",
+    value: "Earlier",
+    label: "Weak fits exit the funnel sooner",
     detail:
-      "See work output early — so expensive loops focus on people who can do the job.",
+      "Capability gaps show up in work product — before they consume interview weeks.",
   },
   {
     value: "~2 hours",
-    label: "Serious role simulation",
+    label: "Of candidate work, not talk",
     detail:
-      "Multi-phase tasks with real materials. Hard enough that the report is worth believing.",
+      "Enough depth that the signal is useful. Short enough that recruiters can run it at volume.",
   },
   {
     value: "Minutes",
-    label: "Recruiter time to a report",
+    label: "For a recruiter to act",
     detail:
-      "Generate, send a link, and review a scored competency breakdown — without scheduling another screen.",
+      "Generate a simulation, send a link, and read a scored report — without another screening call.",
   },
   {
-    value: "Your ATS",
-    label: "Keep the stack you have",
+    value: "No rip-and-replace",
+    label: "Keep your hiring stack",
     detail:
-      "Proof AI is a verification layer, not a full recruiting suite to rip and replace.",
+      "Proof AI sits in front of interviews. Your ATS and process stay in place.",
   },
 ];
 
 const withoutProof = [
-  "Resume keywords and pedigree drive early filters",
-  "Interview loops discover capability gaps too late",
-  "Hiring managers repeat the same soft screens",
-  "Weak fits surface after onboarding, not before",
+  "Pedigree and keywords decide who gets through",
+  "Capability gaps appear mid-loop — after cost is sunk",
+  "Hiring managers re-run the same soft screens",
+  "False positives reach offer before anyone sees real work",
 ];
 
 const withProof = [
-  "Candidates complete realistic role work before interviews",
-  "Scores, strengths, and gaps land in one hiring report",
-  "Recruiters advance competency — not just credentials",
-  "Interview loops reserve calendar for finalists who deliver",
+  "Candidates produce work that mirrors the role first",
+  "You get scores, strengths, and gaps in one place",
+  "Recruiters advance people who cleared a competency bar",
+  "Interview calendars open for finalists with evidence",
 ];
 
 export function BusinessImpactSection() {
@@ -51,12 +51,13 @@ export function BusinessImpactSection() {
         <FadeIn>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-              What hiring teams get back
+              The cost of guessing is interviews
             </h2>
             <p className="mt-3 leading-relaxed text-ink-muted">
-              Proof AI moves competency verification earlier for teams across
-              industries — so you spend less interview time on people who can’t
-              execute, and more on those who can.
+              Resumes describe a career. They do not prove someone can execute
+              your work. Every weak fit that reaches an interview burns recruiter
+              hours and hiring-manager calendar — the most expensive part of the
+              process.
             </p>
           </div>
         </FadeIn>
@@ -81,7 +82,7 @@ export function BusinessImpactSection() {
           <div className="mt-14 grid gap-6 lg:grid-cols-2">
             <div className="rounded-2xl border border-border-subtle bg-surface-overlay/50 p-6 sm:p-8">
               <p className="text-xs font-semibold uppercase tracking-wider text-ink-faint">
-                Resume-first screening
+                Resume-first hiring
               </p>
               <ul className="mt-5 space-y-3">
                 {withoutProof.map((item) => (
@@ -99,7 +100,7 @@ export function BusinessImpactSection() {
             </div>
             <div className="rounded-2xl border border-accent/20 bg-white p-6 shadow-sm sm:p-8">
               <p className="text-xs font-semibold uppercase tracking-wider text-accent">
-                With Proof AI
+                Work-first hiring
               </p>
               <ul className="mt-5 space-y-3">
                 {withProof.map((item) => (

@@ -15,28 +15,30 @@ export function HeroSection() {
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-14">
           <FadeIn>
             <h1 className="text-balance font-serif text-4xl font-semibold tracking-tight text-ink sm:text-5xl sm:leading-[1.08] lg:text-6xl lg:leading-[1.05]">
-              Resumes are guesses, Proof is certainty.
+              Resumes are guesses. Proof is certainty.
             </h1>
             <p className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-ink-muted sm:text-lg">
-              Proof AI builds role-specific work simulations from your job description —
-              with real on-screen materials like emails, reports, and data. Candidates
-              prove they can do the work. You get a competency report, not another resume guess.
+              Most interview hours go to candidates who have never shown they can
+              do the job. Proof AI verifies competency earlier — from your job
+              description it builds a realistic work simulation, embeds the
+              materials the role actually uses, and returns a rubric-scored
+              report before you spend calendar on interviews.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-4">
               <AnimatedButton
                 href="/login?next=%2Fdashboard%3Ftab%3Dsimulate"
                 variant="primary"
               >
-                Generate a sample for your role
+                Try a free sample
               </AnimatedButton>
               <AnimatedButton href="#simulation" variant="secondary">
-                See the report
+                See a sample report
               </AnimatedButton>
             </div>
             <p className="mt-5 text-xs leading-relaxed text-ink-faint">
-              Free sample for any role — sign in to generate once, complete the
-              simulation, and view the report. Contact Proof AI for pricing after
-              that.
+              One free sample per account. Sign in, generate a simulation for
+              your role, complete it, and review the report. Contact us for
+              pricing beyond the sample.
             </p>
           </FadeIn>
           <FadeIn delay={140}>

@@ -20,9 +20,9 @@ export function CandidateReportSpecimen() {
               The competency report you get back
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-ink-muted sm:text-base">
-              Every completed simulation is scored against your role&apos;s
-              competencies — communication, problem solving, domain knowledge —
-              with strengths, gaps, and a clear hiring recommendation.
+              Scores are tied to observed work — communication, problem solving,
+              domain knowledge — with strengths, gaps, and a clear recommendation.
+              Transparent enough to trust. Structured enough to act on.
             </p>
           </div>
         </FadeIn>
@@ -35,8 +35,8 @@ export function CandidateReportSpecimen() {
 
         <FadeIn delay={200}>
           <p className="mx-auto mt-5 max-w-2xl text-center text-xs text-ink-faint">
-            Specimen report — example role for illustration; your report is
-            generated from a real candidate submission.
+            Specimen only — illustrative example. Your report is generated from
+            a real candidate submission against your role.
           </p>
         </FadeIn>
       </div>

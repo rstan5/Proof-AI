@@ -1,9 +1,9 @@
 const STATS = [
-  "Role-native simulations for any industry",
-  "On-screen materials: emails, reports, tables, chats",
-  "Competency verified before the interview loop",
-  "Slots into the ATS you already use",
-  "Structured reports for recruiters and hiring managers",
+  "Fewer interviews spent on weak fits",
+  "Hiring-manager time reserved for finalists",
+  "Evidence before opinion",
+  "Works beside the ATS you already use",
+  "Competency scored against a structured rubric",
 ];
 
 /**

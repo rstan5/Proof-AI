@@ -2,19 +2,19 @@ import { FadeIn } from "@/components/ui/fade-in";
 
 const capabilities = [
   {
-    title: "Work materials on-screen",
-    body: "Emails, reports, Slack threads, data tables, tickets, and briefs ship inside the simulation. Candidates analyze what they see — not a hollow “see attached.”",
-    benefit: "The assessment looks like the job, because it uses the job’s artifacts.",
+    title: "Materials that look like the job",
+    body: "Emails, reports, threads, and tables appear inside the assessment. Candidates work from what they see — not a vague prompt.",
+    benefit: "The output is comparable to real day-one work.",
   },
   {
-    title: "Multi-phase role pressure",
-    body: "Sequential phases tailored to the role — research, decisions, written deliverables, stakeholder pushback — roughly two hours of serious work.",
-    benefit: "Signal deep enough for hiring managers to trust — report fast enough for recruiters to use.",
+    title: "Pressure without theater",
+    body: "Sequential phases force research, judgment, and written deliverables under time — typically about two hours.",
+    benefit: "Deep enough for hiring managers. Fast enough for recruiters.",
   },
   {
-    title: "Rubric-backed reports",
-    body: "Every submission is scored for communication, problem solving, domain knowledge, and overall recommendation — plus strengths and gaps in plain language.",
-    benefit: "Interview only people who cleared your competency bar.",
+    title: "Scores you can defend",
+    body: "Each submission is evaluated against a structured rubric. Every competency score maps back to work the candidate produced.",
+    benefit: "Recommendations rest on evidence — not gut feel.",
   },
 ];
 
@@ -25,12 +25,12 @@ export function FeatureSection() {
         <FadeIn>
           <div className="max-w-2xl">
             <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-              Deeper than a screen. Lighter than an ATS.
+              Built to sit in front of interviews
             </h2>
             <p className="mt-3 leading-relaxed text-ink-muted">
-              Proof AI is a competency verification layer for hiring teams in any
-              industry — finance, healthcare, tech, professional services, and
-              beyond. Keep your ATS; add proof before the interview loop.
+              Proof AI does not replace your ATS or your interview loop. It
+              reduces false positives before either one spends time on a
+              candidate.
             </p>
           </div>
         </FadeIn>
