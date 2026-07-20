@@ -13,7 +13,7 @@ const capabilities = [
   },
   {
     title: "Scores you can defend",
-    body: "Each submission is evaluated against a structured rubric. Every competency score maps back to work the candidate produced.",
+    body: "Uses frontier AI models combined with structured evaluation rubrics. Every competency score maps back to work the candidate produced.",
     benefit: "Evidence to inform interviews — not replace them.",
   },
 ];

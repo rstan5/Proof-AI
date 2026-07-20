@@ -36,8 +36,9 @@ export function CandidateReportSpecimen() {
 
         <FadeIn delay={200}>
           <p className="mx-auto mt-5 max-w-2xl text-center text-xs text-ink-faint">
-            Specimen only — illustrative example. Your report is generated from
-            a real candidate submission against your role.
+            Specimen only — illustrative example. Live reports are generated
+            from a real submission using frontier AI models combined with
+            structured evaluation rubrics.
           </p>
         </FadeIn>
       </div>

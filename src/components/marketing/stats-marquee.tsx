@@ -1,7 +1,7 @@
 const STATS = [
   "See how candidates think through the work",
   "Competency signal — not an interview replacement",
-  "Fewer weak fits reaching the loop",
+  "Frontier AI models + structured evaluation rubrics",
   "Works beside the ATS you already use",
   "Rubric scores tied to observed output",
 ];
