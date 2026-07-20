@@ -60,13 +60,12 @@ function smoothstep(t: number) {
 
 /**
  * Slightly smaller translucent hero radar —
- * polygon keeps morphing; labels rotate and cycle.
+ * polygon keeps morphing; labels cycle (no spin).
  */
 export function HeroRadar({ className }: { className?: string }) {
   const uid = useId().replace(/:/g, "");
   const [reduceMotion, setReduceMotion] = useState(false);
   const [scores, setScores] = useState<number[]>([...PROFILES[0]]);
-  const [rotation, setRotation] = useState(0);
   const [labels, setLabels] = useState<string[]>([...LABEL_SETS[0]]);
   const [labelOpacity, setLabelOpacity] = useState(1);
   const [intro, setIntro] = useState(0);
@@ -91,26 +90,21 @@ export function HeroRadar({ className }: { className?: string }) {
       setIntro(1);
       setScores([...PROFILES[0]]);
       setLabels([...LABEL_SETS[0]]);
-      setRotation(0);
       setLabelOpacity(1);
       return;
     }
 
     let frame: number;
     const start = performance.now();
-    // One full profile morph ~5.5s; label swap every ~4s; slow spin
     const MORPH_MS = 5500;
     const LABEL_MS = 4000;
-    const SPIN_RAD_PER_MS = (Math.PI * 2) / 28000; // full turn ~28s
 
     const tick = (now: number) => {
       const elapsed = now - start;
 
-      // Intro expand
       const introT = smoothstep(Math.min(1, elapsed / 1200));
       setIntro(introT);
 
-      // Morph between profiles with unequal breathing per axis
       const morphPos = (elapsed / MORPH_MS) % PROFILES.length;
       const fromIdx = Math.floor(morphPos) % PROFILES.length;
       const toIdx = (fromIdx + 1) % PROFILES.length;
@@ -118,7 +112,6 @@ export function HeroRadar({ className }: { className?: string }) {
       const from = PROFILES[fromIdx];
       const to = PROFILES[toIdx];
 
-      // Extra independent pulse so axes expand/contract "in different ways"
       const nextScores = from.map((v, i) => {
         const base = lerp(v, to[i], localT);
         const pulse =
@@ -128,14 +121,9 @@ export function HeroRadar({ className }: { className?: string }) {
       });
       setScores(nextScores);
 
-      // Continuous slow rotation of the whole figure + labels
-      setRotation(elapsed * SPIN_RAD_PER_MS);
-
-      // Cycle label sets with a brief fade
       const labelCycle = elapsed / LABEL_MS;
       const labelIdx = Math.floor(labelCycle) % LABEL_SETS.length;
       const labelFrac = labelCycle - Math.floor(labelCycle);
-      // Fade out near end of cycle, fade in at start
       let opacity = 1;
       if (labelFrac > 0.82) opacity = 1 - (labelFrac - 0.82) / 0.18;
       else if (labelFrac < 0.12) opacity = labelFrac / 0.12;
@@ -152,7 +140,7 @@ export function HeroRadar({ className }: { className?: string }) {
   const polygon = scores
     .map((score, i) => {
       const r = (score / 100) * maxR * intro;
-      const { x, y } = polar(cx, cy, r, i, axisCount, rotation);
+      const { x, y } = polar(cx, cy, r, i, axisCount);
       return `${x},${y}`;
     })
     .join(" ");
@@ -191,7 +179,7 @@ export function HeroRadar({ className }: { className?: string }) {
         {[0.28, 0.5, 0.72, 1].map((ring) => (
           <polygon
             key={ring}
-            points={ringPoints(cx, cy, maxR * ring, axisCount, rotation)}
+            points={ringPoints(cx, cy, maxR * ring, axisCount)}
             fill="none"
             stroke="rgba(62,52,42,0.12)"
             strokeWidth="1.25"
@@ -199,7 +187,7 @@ export function HeroRadar({ className }: { className?: string }) {
         ))}
 
         {Array.from({ length: axisCount }, (_, i) => {
-          const { x, y } = polar(cx, cy, maxR, i, axisCount, rotation);
+          const { x, y } = polar(cx, cy, maxR, i, axisCount);
           return (
             <line
               key={i}
@@ -220,7 +208,6 @@ export function HeroRadar({ className }: { className?: string }) {
           y2={cy + maxR}
           stroke="rgba(62,52,42,0.05)"
           strokeWidth="1"
-          transform={`rotate(${(rotation * 180) / Math.PI} ${cx} ${cy})`}
         />
         <line
           x1={cx - maxR}
@@ -229,7 +216,6 @@ export function HeroRadar({ className }: { className?: string }) {
           y2={cy}
           stroke="rgba(62,52,42,0.05)"
           strokeWidth="1"
-          transform={`rotate(${(rotation * 180) / Math.PI} ${cx} ${cy})`}
         />
 
         <polygon
@@ -244,7 +230,7 @@ export function HeroRadar({ className }: { className?: string }) {
 
         {scores.map((score, i) => {
           const r = (score / 100) * maxR * intro;
-          const { x, y } = polar(cx, cy, r, i, axisCount, rotation);
+          const { x, y } = polar(cx, cy, r, i, axisCount);
           return (
             <circle
               key={i}
@@ -259,14 +245,7 @@ export function HeroRadar({ className }: { className?: string }) {
         })}
 
         {labels.map((label, i) => {
-          const { x, y, angle } = polar(
-            cx,
-            cy,
-            labelR,
-            i,
-            axisCount,
-            rotation,
-          );
+          const { x, y, angle } = polar(cx, cy, labelR, i, axisCount);
           const cos = Math.cos(angle);
           const sin = Math.sin(angle);
           const anchor =
