@@ -14,8 +14,7 @@ import type {
 } from "@/types/database";
 import {
   FREE_SAMPLE_LIMIT,
-  PRICING_CONTACT_EMAIL,
-  PRICING_MAILTO,
+  MONTHLY_LIMIT_CODE,
   SAMPLE_LIMIT_CODE,
 } from "@/lib/free-tier";
 
@@ -305,7 +304,11 @@ function SimulateTab({
         code?: string;
         details?: string[];
       };
-      if (data.code === SAMPLE_LIMIT_CODE || res.status === 403) {
+      if (
+        data.code === SAMPLE_LIMIT_CODE ||
+        data.code === MONTHLY_LIMIT_CODE ||
+        res.status === 403
+      ) {
         setShowLimitModal(true);
         setStatus("idle");
         return;
@@ -469,18 +472,19 @@ function SimulateTab({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/55 p-4 backdrop-blur-sm">
           <div className="w-full max-w-md rounded-2xl border border-border-subtle bg-white p-6 shadow-lg">
             <p className="text-base font-semibold text-ink">
-              Contact Proof AI for pricing
+              Upgrade to keep generating
             </p>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-              Your free sample is used up. To generate more role simulations for
-              hiring, reach out to our team.
+              Your free sample is used up — or you&apos;ve hit this month&apos;s
+              plan limit. Choose Small Business or Enterprise on the pricing
+              page to continue.
             </p>
-            <a
-              href={PRICING_MAILTO}
+            <Link
+              href="/pricing"
               className="mt-5 inline-flex h-10 w-full items-center justify-center rounded-lg bg-accent text-sm font-semibold text-surface transition hover:bg-accent-muted"
             >
-              Email {PRICING_CONTACT_EMAIL}
-            </a>
+              View pricing
+            </Link>
             <button
               type="button"
               onClick={() => setShowLimitModal(false)}

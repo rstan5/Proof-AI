@@ -11,6 +11,7 @@ const nav = [
   { label: "Process", href: "#how" },
   { label: "Product", href: "#product" },
   { label: "Report", href: "#simulation" },
+  { label: "Pricing", href: "/pricing" },
 ];
 
 export function Navbar() {
@@ -35,15 +36,25 @@ export function Navbar() {
         <div className="flex h-14 items-center justify-between gap-3 sm:h-16">
           <BrandLogo size={32} priority />
           <nav className="hidden items-center gap-8 text-sm text-ink-muted md:flex">
-            {nav.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="transition hover:text-ink"
-              >
-                {item.label}
-              </a>
-            ))}
+            {nav.map((item) =>
+              item.href.startsWith("/") ? (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="font-semibold text-ink transition hover:text-accent"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="transition hover:text-ink"
+                >
+                  {item.label}
+                </a>
+              ),
+            )}
             {signedIn && (
               <Link
                 href="/dashboard"
@@ -87,15 +98,25 @@ export function Navbar() {
           </div>
         </div>
         <nav className="flex items-center gap-5 overflow-x-auto border-t border-border-subtle py-2.5 text-xs text-ink-muted md:hidden">
-          {nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="shrink-0 whitespace-nowrap transition hover:text-ink"
-            >
-              {item.label}
-            </a>
-          ))}
+          {nav.map((item) =>
+            item.href.startsWith("/") ? (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="shrink-0 whitespace-nowrap font-semibold text-ink"
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <a
+                key={item.href}
+                href={item.href}
+                className="shrink-0 whitespace-nowrap transition hover:text-ink"
+              >
+                {item.label}
+              </a>
+            ),
+          )}
           {signedIn && (
             <Link
               href="/dashboard"

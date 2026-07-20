@@ -381,7 +381,7 @@ log(
   "second generate blocked (sample limit)",
   limitRes.status === 403 &&
     limitJson.code === "SAMPLE_LIMIT_REACHED" &&
-    /contact\.proof\.ai@gmail\.com/i.test(limitText),
+    (/pricing/i.test(limitText) || limitJson.pricing_url === "/pricing"),
   `${limitRes.status} ${limitText.slice(0, 220)}`,
 );
 
@@ -411,8 +411,25 @@ log(
 );
 log(
   "landing Contact email",
-  /contact\.proof\.ai@gmail\.com/.test(homeHtml),
+  /contact\.proof\.ai@gmail\.com/.test(homeHtml) || /View pricing/.test(homeHtml),
   "footer/contact checked",
+);
+log(
+  "landing Pricing nav",
+  /href="\/pricing"/.test(homeHtml) || /Pricing/.test(homeHtml),
+  "pricing link checked",
+);
+
+const pricingPage = await fetch(`${base}/pricing`);
+log("pricing page", pricingPage.status === 200, String(pricingPage.status));
+const pricingHtml = await pricingPage.text();
+log(
+  "pricing shows three tiers",
+  /Small Business/.test(pricingHtml) &&
+    /Enterprise/.test(pricingHtml) &&
+    /\$50/.test(pricingHtml) &&
+    /\$400/.test(pricingHtml),
+  "tier labels checked",
 );
 
 const loginPage = await fetch(`${base}/login`);

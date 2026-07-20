@@ -37,9 +37,11 @@ export function HeroSection() {
               </AnimatedButton>
             </div>
             <p className="mt-5 text-xs leading-relaxed text-ink-faint">
-              One free sample per account. Sign in, generate a simulation for
-              your role, complete it, and review the report. Contact us for
-              pricing beyond the sample.
+              One free sample per account. Need more? See{" "}
+              <a href="/pricing" className="underline hover:text-ink-muted">
+                pricing
+              </a>
+              .
             </p>
           </FadeIn>
           <FadeIn delay={140}>

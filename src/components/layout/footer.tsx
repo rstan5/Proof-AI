@@ -45,9 +45,16 @@ export function Footer() {
         <p className="text-center text-[11px] leading-relaxed text-ink-faint">
           Proof AI shows how candidates think through role-like work. It does
           not replace interviews, licensing, or human judgment — and it measures
-          competency, not claimed expertise. Pricing:{" "}
+          competency, not claimed expertise.{" "}
           <a
-            href="mailto:contact.proof.ai@gmail.com?subject=Proof%20AI%20pricing"
+            href="/pricing"
+            className="underline decoration-border-subtle underline-offset-2 hover:text-ink-muted"
+          >
+            View pricing
+          </a>
+          . Questions:{" "}
+          <a
+            href="mailto:contact.proof.ai@gmail.com?subject=Proof%20AI%20inquiry"
             className="underline decoration-border-subtle underline-offset-2 hover:text-ink-muted"
           >
             contact.proof.ai@gmail.com

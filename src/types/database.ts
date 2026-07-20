@@ -4,6 +4,11 @@ export interface CompanyProfile {
   role_at_company: string;
   contact_phone: string | null;
   created_at: string;
+  plan_id?: string;
+  stripe_customer_id?: string | null;
+  stripe_subscription_id?: string | null;
+  subscription_status?: string | null;
+  plan_simulations_per_month?: number | null;
 }
 
 export interface CompetencyEvaluation {

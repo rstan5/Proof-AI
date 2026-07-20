@@ -6,12 +6,7 @@ import {
 } from "@/lib/openai/prompts";
 import { parseSimulationContent } from "@/lib/simulation-structure";
 import { getRequestUser } from "@/lib/supabase/request-user";
-import {
-  FREE_SAMPLE_LIMIT,
-  PRICING_CONTACT_EMAIL,
-  SAMPLE_LIMIT_CODE,
-  pricingContactBlurb,
-} from "@/lib/free-tier";
+import { assertCanGenerateSimulation } from "@/lib/subscription-gate";
 import {
   hydrateSimulationMaterials,
   materialsRepairUserPrompt,
@@ -52,24 +47,15 @@ export async function POST(request: Request) {
     }
     const { user, supabase } = authed;
 
-    const { count, error: countError } = await supabase
-      .from("simulations")
-      .select("id", { count: "exact", head: true })
-      .eq("recruiter_id", user.id);
-
-    if (countError) {
-      console.error("Simulation count error:", countError);
-      return NextResponse.json({ error: "Server error" }, { status: 500 });
-    }
-
-    if ((count ?? 0) >= FREE_SAMPLE_LIMIT) {
+    const gate = await assertCanGenerateSimulation(supabase, user.id);
+    if (!gate.ok) {
       return NextResponse.json(
         {
-          error: pricingContactBlurb(),
-          code: SAMPLE_LIMIT_CODE,
-          contact_email: PRICING_CONTACT_EMAIL,
+          error: gate.error,
+          code: gate.code,
+          pricing_url: gate.pricing_url,
         },
-        { status: 403 },
+        { status: gate.status },
       );
     }
 
