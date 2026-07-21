@@ -42,6 +42,13 @@ export async function POST(request: Request) {
       .maybeSingle();
 
     let customerId = profile?.stripe_customer_id ?? undefined;
+    if (customerId) {
+      try {
+        await stripe.customers.retrieve(customerId);
+      } catch {
+        customerId = undefined;
+      }
+    }
     if (!customerId) {
       const customer = await stripe.customers.create({
         email: user.email ?? undefined,
