@@ -20,6 +20,13 @@ export const metadata: Metadata = {
   title: "Proof AI — Verify competency before you hire",
   description:
     "See how candidates think through role-like work before interviews. Proof AI is a competency work sample — rubric-scored, not a replacement for your hiring loop.",
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/logo.png", type: "image/png" },
+    ],
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({
