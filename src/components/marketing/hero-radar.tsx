@@ -5,11 +5,11 @@ import { cn } from "@/utils/cn";
 
 /** Candidates cycled every 2s — the polygon morphs to each one's profile. */
 const CANDIDATES = [
-  { name: "Maya Chen", scores: [91, 78, 86, 84] },
-  { name: "Jordan Reese", scores: [72, 94, 70, 88] },
-  { name: "Aisha Patel", scores: [88, 68, 95, 76] },
-  { name: "Diego Alvarez", scores: [65, 82, 74, 92] },
-  { name: "Sam Whitfield", scores: [94, 86, 68, 80] },
+  { name: "Maya Chen", scores: [96, 52, 88, 70] },
+  { name: "Jordan Reese", scores: [48, 97, 55, 90] },
+  { name: "Aisha Patel", scores: [85, 45, 98, 58] },
+  { name: "Diego Alvarez", scores: [50, 88, 46, 95] },
+  { name: "Sam Whitfield", scores: [98, 90, 60, 48] },
 ] as const;
 
 /** Compact labels so side axes never clip. Order: top, right, bottom, left. */
@@ -116,7 +116,7 @@ export function HeroRadar({ className }: { className?: string }) {
         const pulse =
           Math.sin(elapsed / 520 + i * 1.7) * 2 +
           Math.sin(elapsed / 780 + i * 0.9) * 1.5;
-        return Math.min(98, Math.max(55, base + pulse));
+        return Math.min(99, Math.max(38, base + pulse));
       });
       setScores(nextScores);
 
@@ -152,7 +152,7 @@ export function HeroRadar({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "relative mx-auto flex w-full max-w-[34rem] items-center justify-center overflow-visible",
+        "relative mx-auto flex w-full max-w-[34rem] flex-col items-center justify-center overflow-visible",
         className,
       )}
     >
@@ -275,9 +275,9 @@ export function HeroRadar({ className }: { className?: string }) {
         })}
       </svg>
 
-      <div className="pointer-events-none absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center gap-0.5">
+      <div className="pointer-events-none mt-2 flex flex-col items-center gap-0.5">
         <span
-          className="font-serif text-base font-semibold text-ink"
+          className="font-serif text-lg font-semibold text-ink"
           style={{ opacity: nameOpacity, transition: "opacity 120ms linear" }}
         >
           {CANDIDATES[candidateIdx].name}
