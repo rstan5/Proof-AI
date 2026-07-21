@@ -14,7 +14,7 @@ export function HeroSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-14">
           <FadeIn>
-            <h1 className="text-balance font-serif text-4xl font-semibold tracking-tight text-ink sm:text-5xl sm:leading-[1.08] lg:text-6xl lg:leading-[1.05]">
+            <h1 className="text-balance font-serif text-4xl font-semibold leading-[1.2] tracking-tight text-ink sm:text-5xl sm:leading-[1.18] lg:text-6xl lg:leading-[1.16]">
               Resumes are guesses. Proof is certainty.
             </h1>
             <p className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-ink-muted sm:text-lg">
