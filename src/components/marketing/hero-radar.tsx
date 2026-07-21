@@ -3,22 +3,17 @@
 import { useEffect, useId, useState } from "react";
 import { cn } from "@/utils/cn";
 
-/** Score profiles the polygon morphs between — each expands/contracts differently. */
-const PROFILES = [
-  [91, 78, 86, 84],
-  [72, 94, 70, 88],
-  [88, 68, 95, 76],
-  [65, 82, 74, 92],
-  [94, 86, 68, 80],
+/** Candidates cycled every 2s — the polygon morphs to each one's profile. */
+const CANDIDATES = [
+  { name: "Maya Chen", scores: [91, 78, 86, 84] },
+  { name: "Jordan Reese", scores: [72, 94, 70, 88] },
+  { name: "Aisha Patel", scores: [88, 68, 95, 76] },
+  { name: "Diego Alvarez", scores: [65, 82, 74, 92] },
+  { name: "Sam Whitfield", scores: [94, 86, 68, 80] },
 ] as const;
 
 /** Compact labels so side axes never clip. Order: top, right, bottom, left. */
-const LABEL_SETS = [
-  ["Communication", "Problem", "Domain", "Overall"],
-  ["Clarity", "Judgment", "Craft", "Fit"],
-  ["Writing", "Analysis", "Expertise", "Impact"],
-  ["Tone", "Priorities", "Knowledge", "Signal"],
-] as const;
+const AXIS_LABELS = ["Communication", "Problem", "Domain", "Overall"] as const;
 
 function polar(
   cx: number,
@@ -62,9 +57,9 @@ function smoothstep(t: number) {
 export function HeroRadar({ className }: { className?: string }) {
   const uid = useId().replace(/:/g, "");
   const [reduceMotion, setReduceMotion] = useState(false);
-  const [scores, setScores] = useState<number[]>([...PROFILES[0]]);
-  const [labels, setLabels] = useState<string[]>([...LABEL_SETS[0]]);
-  const [labelOpacity, setLabelOpacity] = useState(1);
+  const [scores, setScores] = useState<number[]>([...CANDIDATES[0].scores]);
+  const [candidateIdx, setCandidateIdx] = useState(0);
+  const [nameOpacity, setNameOpacity] = useState(1);
   const [intro, setIntro] = useState(0);
 
   // Wide canvas gives left/right labels room; diamond is a bit larger.
@@ -87,16 +82,17 @@ export function HeroRadar({ className }: { className?: string }) {
   useEffect(() => {
     if (reduceMotion) {
       setIntro(1);
-      setScores([...PROFILES[0]]);
-      setLabels([...LABEL_SETS[0]]);
-      setLabelOpacity(1);
+      setScores([...CANDIDATES[0].scores]);
+      setCandidateIdx(0);
+      setNameOpacity(1);
       return;
     }
 
     let frame: number;
     const start = performance.now();
-    const MORPH_MS = 2600;
-    const LABEL_MS = 1700;
+    // Each candidate holds for 2s; the polygon morphs during the last 25%.
+    const CANDIDATE_MS = 2000;
+    const MORPH_FRACTION = 0.25;
 
     const tick = (now: number) => {
       const elapsed = now - start;
@@ -104,30 +100,39 @@ export function HeroRadar({ className }: { className?: string }) {
       const introT = smoothstep(Math.min(1, elapsed / 900));
       setIntro(introT);
 
-      const morphPos = (elapsed / MORPH_MS) % PROFILES.length;
-      const fromIdx = Math.floor(morphPos) % PROFILES.length;
-      const toIdx = (fromIdx + 1) % PROFILES.length;
-      const localT = smoothstep(morphPos - fromIdx);
-      const from = PROFILES[fromIdx];
-      const to = PROFILES[toIdx];
+      const cyclePos = elapsed / CANDIDATE_MS;
+      const fromIdx = Math.floor(cyclePos) % CANDIDATES.length;
+      const toIdx = (fromIdx + 1) % CANDIDATES.length;
+      const frac = cyclePos - Math.floor(cyclePos);
+      const morphT =
+        frac < 1 - MORPH_FRACTION
+          ? 0
+          : smoothstep((frac - (1 - MORPH_FRACTION)) / MORPH_FRACTION);
+      const from = CANDIDATES[fromIdx].scores;
+      const to = CANDIDATES[toIdx].scores;
 
       const nextScores = from.map((v, i) => {
-        const base = lerp(v, to[i], localT);
+        const base = lerp(v, to[i], morphT);
         const pulse =
-          Math.sin(elapsed / 520 + i * 1.7) * 5 +
-          Math.sin(elapsed / 780 + i * 0.9) * 4;
+          Math.sin(elapsed / 520 + i * 1.7) * 2 +
+          Math.sin(elapsed / 780 + i * 0.9) * 1.5;
         return Math.min(98, Math.max(55, base + pulse));
       });
       setScores(nextScores);
 
-      const labelCycle = elapsed / LABEL_MS;
-      const labelIdx = Math.floor(labelCycle) % LABEL_SETS.length;
-      const labelFrac = labelCycle - Math.floor(labelCycle);
+      // Show the incoming candidate's name once the morph is halfway there.
+      setCandidateIdx(morphT > 0.5 ? toIdx : fromIdx);
+
+      // Fade the name out/in around the switch.
       let opacity = 1;
-      if (labelFrac > 0.78) opacity = 1 - (labelFrac - 0.78) / 0.22;
-      else if (labelFrac < 0.14) opacity = labelFrac / 0.14;
-      setLabelOpacity(Math.max(0, Math.min(1, opacity)));
-      setLabels([...LABEL_SETS[labelIdx]]);
+      if (frac > 1 - MORPH_FRACTION) {
+        const mid = 1 - MORPH_FRACTION / 2;
+        opacity =
+          frac < mid
+            ? 1 - (frac - (1 - MORPH_FRACTION)) / (MORPH_FRACTION / 2)
+            : (frac - mid) / (MORPH_FRACTION / 2);
+      }
+      setNameOpacity(Math.max(0, Math.min(1, opacity)));
 
       frame = requestAnimationFrame(tick);
     };
@@ -243,7 +248,7 @@ export function HeroRadar({ className }: { className?: string }) {
           );
         })}
 
-        {labels.map((label, i) => {
+        {AXIS_LABELS.map((label, i) => {
           const { x, y, angle } = polar(cx, cy, labelR, i, axisCount);
           const cos = Math.cos(angle);
           const sin = Math.sin(angle);
@@ -262,7 +267,6 @@ export function HeroRadar({ className }: { className?: string }) {
               className="fill-ink-muted text-[13px] font-semibold uppercase tracking-[0.1em]"
               style={{
                 fontFamily: "var(--font-sans), Nunito, sans-serif",
-                opacity: labelOpacity,
               }}
             >
               {label}
@@ -271,12 +275,20 @@ export function HeroRadar({ className }: { className?: string }) {
         })}
       </svg>
 
-      <div className="pointer-events-none absolute bottom-0 left-1/2 flex -translate-x-1/2 items-center gap-2 text-[11px] text-ink-faint">
+      <div className="pointer-events-none absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center gap-0.5">
         <span
-          className="inline-block h-2.5 w-2.5 rounded-sm bg-accent/25 ring-1 ring-accent/35"
-          aria-hidden
-        />
-        Candidate score
+          className="font-serif text-base font-semibold text-ink"
+          style={{ opacity: nameOpacity, transition: "opacity 120ms linear" }}
+        >
+          {CANDIDATES[candidateIdx].name}
+        </span>
+        <span className="flex items-center gap-2 text-[11px] text-ink-faint">
+          <span
+            className="inline-block h-2.5 w-2.5 rounded-sm bg-accent/25 ring-1 ring-accent/35"
+            aria-hidden
+          />
+          Candidate competency profile
+        </span>
       </div>
     </div>
   );
